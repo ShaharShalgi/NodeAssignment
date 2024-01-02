@@ -87,6 +87,37 @@
             return IsExistsRecursive(lst.GetNext(), x);
         }
 
+        //public static Node<T> Create<T>(int from, int to, int quantity)
+        //{
+        //    Random rnd = new Random();
+        //    int j = rnd.Next(from, to+1);
+        //    for(int i = 0; i < quantity; i++)
+        //    {
+        //        int place = rnd.Next(from, to + 1);
+        //        Node<int> node = new Node<int>(j);
+
+        //    }
+        //}
+        public static Node<T> DeleteValue<T>(Node<T> node, T value)
+        {
+            Node<T> head = node;
+            if (node.GetValue().Equals(value))
+            {
+                head = node.GetNext();
+                node.SetNext(null);
+            }
+            else
+            {
+                while (node.HasNext() && !node.GetNext().GetValue().Equals(value))
+                {
+                    node = node.GetNext();
+                }
+                node.SetNext(node.GetNext().GetNext());
+                node.GetNext().SetNext(null);
+            }
+            return head;
+        }
+
 
 
         static void Main(string[] args)
