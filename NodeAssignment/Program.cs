@@ -108,15 +108,62 @@
             }
             else
             {
-                while (node.HasNext() && !node.GetNext().GetValue().Equals(value))
+                Node<T> next = node.GetNext();
+                while (node.HasNext() && !next.GetValue().Equals(value))
                 {
                     node = node.GetNext();
+                    next = node.GetNext();
                 }
-                node.SetNext(node.GetNext().GetNext());
-                node.GetNext().SetNext(null);
+                if (node.HasNext())
+                {
+                    node.SetNext(node.GetNext().GetNext());
+                    node.GetNext().SetNext(null);
+                }
             }
             return head;
         }
+        public static int Sequence(Node<int> seq, int num)
+        {
+            Node<int> dummy = new Node<int>(0, seq);
+            int counter = 0;
+            if(!IsExists(seq, num))
+            {
+                return 0;
+            }
+            
+            while(seq.HasNext())
+            {
+                if(seq.GetValue() == num && dummy.GetValue() != num)
+                    counter++;
+                dummy = seq;
+                seq = seq.GetNext();
+
+            }
+            return counter;
+        }
+        public static string OddOrEven(Node<int> seq)
+        {
+            
+            int evencounter = 0;
+            int oddcounter = 0;
+            
+
+            while (seq.HasNext())
+            {
+                if (seq.GetValue() %2==0)
+                    evencounter++;
+                else oddcounter++;
+                seq = seq.GetNext();
+
+            }
+            if (evencounter == oddcounter)
+                return "s";
+            else if (oddcounter > evencounter)
+                return "e";
+            else
+                return "z";
+        }
+
 
 
 
