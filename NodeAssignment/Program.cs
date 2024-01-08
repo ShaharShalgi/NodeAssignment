@@ -1,4 +1,6 @@
-﻿namespace NodeAssignment
+﻿using System.Xml.Linq;
+
+namespace NodeAssignment
 {
     internal class Program
     {
@@ -163,6 +165,135 @@
             else
                 return "z";
         }
+
+        //שאלה שש 
+        public static Node<T> NoDoubles<T>(Node<T> node)
+        {
+            
+            Node<T> complete = new Node<T>(default);//ניצור את רשימת החוליות שנחזיר
+            Node<T> dummy = new Node<T>(default, complete);//דאמי
+            while (node!=null)
+            {
+                while(complete!=null)
+                {
+                    if (!complete.GetNext().GetValue().Equals(node.GetValue()))
+                    {
+                        complete.SetValue(node.GetValue());
+                    }
+                    complete= complete.GetNext();
+                }
+                node= node.GetNext();
+
+            }
+            return dummy.GetNext();
+        }
+        //אורך הקלט - מספר החוליות
+        //המקרה הגרוע - אין כפילויות או יש כפילות באחרון
+        //הפעולה תבצע
+        //n^2 - אן בריבוע 
+        //O(n^2)
+
+        // שאלה שמונה
+
+        public static bool IsAscending2(Node<int> lst)
+        {
+            while (lst.HasNext())
+            {
+                if (lst.GetValue() > lst.GetNext().GetValue())
+                {
+                    return false;
+                }
+                lst = lst.GetNext();
+            }
+            return true;
+
+        }
+
+        //אורך הקטל - מספר החוליות
+        //הפעולה תבצע 
+        //n
+        //המקרה הגרוע - הרשימה ממויינת או שהאחרון לא ממויין
+        //O(n)
+
+        //שאלה עשר
+        public static Node<int> Series(int beginner, int quantity)
+        {
+            
+            Node<int> node = new Node<int>(beginner);//ניצור את החוליה הראשונה
+            
+            Node<int> next = node.GetNext();//ניצור מצביע לנקסט של החוליה שיצרנו
+            
+            for(int i = beginner+1; i< quantity-1; i++) 
+            {
+                //נשים בהבא בתור את האיי שהוא בעצם כל פעם בגינר םלוס אחד והאיי משתנה
+                next.SetValue(i);
+                //נקדם את המצביע
+                next = next.GetNext();
+
+            }
+            return node;
+        }
+
+        //אורך הקלט - מספר חוליות
+        //מקרה גרוע - הרווח גדול? 
+        //O(n)
+
+        //שאלה 12
+        public static bool IsBalanced(Node<int> node)
+        {
+            int count = 0;
+            int countLess = 0;
+            int total = 0;
+            int countMore = 0;
+            while (node != null)//נמצא את הטוטאל של הכל וכמות התאים בשביל חישוב הממוצע
+            {
+                total+= node.GetValue();
+                count++;
+                node= node.GetNext();
+            }
+            for (int i = 0; i < count; i++)//כיוון שמצאנו את כמות החוליות נרוץ עליה ונבדוק לגבי כל אחד האם הוא מעל או מתחת לממוצע
+            {
+                if (node.GetValue() < (double)total / count)
+                    countLess++;
+                else if (node.GetValue() > (double)total / count)
+                    countMore++;
+                
+                node = node.GetNext();
+            }
+            if (countLess == countMore)
+                return true;
+            return false;
+        }
+        //אורך הקלט - מספר החוליות
+        //מקרה גרוע - הערכים שקטנים מהממוצע שווים לערכים שגדולים מהממוצע
+        //O(n)
+
+        //שאלה 14
+        public static Node<int> DeleteNAll(int n, Node<int> node)
+        {
+            int biggest = int.MinValue;
+            for (int i = 0; i < n; i++)
+            {
+                while (node != null)
+                {
+                    if (node.GetValue() > node.GetNext().GetValue())
+                    {
+                        biggest = node.GetValue();
+                    }
+                    else
+                    {
+                        biggest = node.GetNext().GetValue();
+                    }
+
+                }
+                node = DeleteValue(node,biggest);
+                
+            }
+            return node;
+        }
+        //אורך קלט - מספר חוליות
+        //מקרה גרוע - כשהשרשרת ממויינת מלמטה למעלה
+        //סיבוכיות - O(n^2)
 
 
 
