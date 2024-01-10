@@ -294,6 +294,89 @@ namespace NodeAssignment
         //אורך קלט - מספר חוליות
         //מקרה גרוע - כשהשרשרת ממויינת מלמטה למעלה
         //סיבוכיות - O(n^2)
+        public static int Bigger(Node<int> lis1, Node<int> lis2)
+        {
+            
+            if (Count(lis1) > Count(lis2))
+            {
+                return 1;
+            }
+            else if (Count(lis2) > Count(lis1))
+                return 2;
+
+            while(lis1 != null || lis2 != null) 
+            {
+                if (lis1.GetValue() > lis2.GetValue())
+                    return 1;
+                else if (lis2.GetValue() > lis1.GetValue())
+                    return 2;
+                lis1 = lis1.GetNext();
+                lis2 = lis2.GetNext();
+            }
+            return 0;
+
+            
+        }
+        public static int Count(Node<int> node)
+        {
+            int counter = 0;
+            while(node != null)
+            {
+                counter++;
+                node = node.GetNext();
+            }
+            return counter;
+        }
+
+        public static Node<T> DeleteList<T>(Node<T> lis1, Node<T> lis2)
+        {
+            Node<T> dummy = new Node<T>(default, lis1);
+            
+            while(lis2 != null)
+            {
+                lis1 = WhereSequence(lis1, lis2);
+                lis1 = DeleteValue(lis1, lis2.GetValue());
+                lis1 = lis1.GetNext();
+                lis2 = lis2.GetNext();
+              
+            }
+            return dummy.GetNext();
+        }
+        public static Node<T> WhereSequence<T>(Node<T> lis1, Node<T> lis2)
+        {
+            Node<T> SequenceHead = null;
+            while(lis1 != null && lis2 != null)
+            {
+                if (lis1.GetValue().Equals(lis2.GetValue()))
+                {
+                    SequenceHead = lis1;
+                    Node<T> Temp1 = lis1;
+                    Node<T> Temp2 = lis2;
+
+                    while(lis2 != null)
+                    {
+                        lis1 = lis1.GetNext();
+                        lis2 = lis2.GetNext();
+                        if (!lis1.GetValue().Equals(lis2.GetValue()))
+                        {
+                            SequenceHead = null;
+                        }
+                      } 
+
+                    lis1 = Temp1;
+                    lis2 = Temp2;
+                    
+                }
+                else
+                {
+                    SequenceHead = null;
+                }
+                lis1 = lis1.GetNext();
+                lis2 = lis2.GetNext();
+            }
+            return SequenceHead;
+        }
+
 
 
 
