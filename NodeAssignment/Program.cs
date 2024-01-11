@@ -376,6 +376,36 @@ namespace NodeAssignment
             }
             return SequenceHead;
         }
+        public static Node<T> Merge<T>(Node<T> list1,  Node<T> list2)
+        {
+            Node<T> Head = new Node<T>(list1.GetValue());
+            Node<T> next = Head;
+            while (list1 != null && list2 != null)
+            {
+                
+                next.SetNext(new Node<T>(list2.GetValue()));
+                next.GetNext().SetNext(new Node<T>(list1.GetValue()));
+                next = next.GetNext();
+                list1 = list1.GetNext();
+                list2 = list2.GetNext();
+            }
+            
+                while(list1 != null)
+                {
+                    next.SetNext(new Node<T>(list1.GetValue()));
+                    list1 = list1.GetNext(); 
+                    next = next.GetNext();
+                }
+            
+                while (list2 != null)
+                {
+                    next.SetNext(new Node<T>(list2.GetValue()));
+                    list2 = list2.GetNext();
+                    next = next.GetNext();
+                }
+            
+            return Head;
+        }
 
 
 
